@@ -1,0 +1,11 @@
+services:
+  explorer:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      KUBECONFIG: /root/.kube/config
+      K8S_NAMESPACE: default
+      PORT: "8080"
+    volumes:
+      - ${HOME}/.kube:/root/.kube:ro
