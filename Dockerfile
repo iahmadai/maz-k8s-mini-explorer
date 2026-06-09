@@ -20,3 +20,13 @@ USER nonroot:nonroot
 
 ENTRYPOINT ["/k8s-explorer"]
 CMD ["serve"]
+
+# Dev compose stage (kubeconfig fix for Docker Desktop)
+FROM alpine:3.20 AS dev
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /k8s-explorer /k8s-explorer
+COPY scripts/docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+EXPOSE 8080
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["serve"]

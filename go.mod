@@ -1,6 +1,6 @@
 module github.com/maz/k8s-mini-explorer
 
-go 1.26.3
+go 1.23
 
 require (
 	github.com/spf13/cobra v1.8.1

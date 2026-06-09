@@ -1,11 +1,15 @@
 services:
   explorer:
-    build: .
+    build:
+      context: .
+      target: dev
     ports:
       - "8080:8080"
     environment:
-      KUBECONFIG: /root/.kube/config
       K8S_NAMESPACE: default
       PORT: "8080"
+      INSECURE_SKIP_TLS_VERIFY: "true"
     volumes:
-      - ${HOME}/.kube:/root/.kube:ro
+      - ${HOME}/.kube/config:/kube/config:ro
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

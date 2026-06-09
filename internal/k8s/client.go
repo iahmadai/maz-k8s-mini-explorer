@@ -31,6 +31,12 @@ func NewClient(cfg *config.Config) (kubernetes.Interface, error) {
 		}
 	}
 
+	if cfg.InsecureSkipTLSVerify {
+		restCfg.TLSClientConfig.Insecure = true
+		restCfg.TLSClientConfig.CAFile = ""
+		restCfg.TLSClientConfig.CAData = nil
+	}
+
 	clientset, err := kubernetes.NewForConfig(restCfg)
 	if err != nil {
 		return nil, fmt.Errorf("kubernetes client: %w", err)

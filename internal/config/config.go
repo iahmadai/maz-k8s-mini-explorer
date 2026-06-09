@@ -6,11 +6,12 @@ import (
 )
 
 type Config struct {
-	Port           int
-	KubeconfigPath string
-	KubeContext    string
-	DefaultNS      string
-	InCluster      bool
+	Port                  int
+	KubeconfigPath        string
+	KubeContext           string
+	DefaultNS             string
+	InCluster             bool
+	InsecureSkipTLSVerify bool
 }
 
 func Load() *Config {
@@ -36,10 +37,11 @@ func Load() *Config {
 	}
 
 	return &Config{
-		Port:           port,
-		KubeconfigPath: kubeconfig,
-		KubeContext:    os.Getenv("K8S_CONTEXT"),
-		DefaultNS:      defaultNS,
-		InCluster:      inCluster,
+		Port:                  port,
+		KubeconfigPath:        kubeconfig,
+		KubeContext:           os.Getenv("K8S_CONTEXT"),
+		DefaultNS:             defaultNS,
+		InCluster:             inCluster,
+		InsecureSkipTLSVerify: os.Getenv("INSECURE_SKIP_TLS_VERIFY") == "true",
 	}
 }
